@@ -1,4 +1,4 @@
-const CACHE = 'radar-champignon-v32-1';
+const CACHE = 'radar-champignon-v32-3';
 const SHELL = [
   './',
   './index.html',

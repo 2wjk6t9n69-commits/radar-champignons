@@ -30,18 +30,50 @@
         <span>V32 · secteur par secteur</span>
       </div>
     </div>
+    <button id="history-btn" class="icon-btn" aria-label="Historique des observations" title="Historique des observations">📋</button>
     <button id="help-btn" class="icon-btn" aria-label="À propos du score" title="À propos du score">?</button>
   </div>
 
   <div id="map"></div>
 
   <button id="locate-btn" class="icon-btn" aria-label="Me géolocaliser" title="Me géolocaliser">◎</button>
+  <button id="scan-btn" class="icon-btn" aria-label="Meilleurs secteurs autour de moi" title="Meilleurs secteurs autour de moi">🎯</button>
 
   <div id="toast" role="status"></div>
 
   <div id="install-hint">
     <p>Installe l'app : bouton Partager <b>›</b> « Sur l'écran d'accueil ».</p>
     <button id="install-dismiss" class="dismiss">Fermer</button>
+  </div>
+
+  <div id="scan-panel">
+    <div class="history-header">
+      <div>
+        <p class="sheet-eyebrow" style="margin-bottom:2px;">Zones boisées réelles (OpenStreetMap)</p>
+        <p class="sheet-title" style="margin:0;">Meilleurs secteurs autour de moi</p>
+      </div>
+      <button id="scan-close" class="icon-btn" aria-label="Fermer">✕</button>
+    </div>
+    <div id="scan-status" class="obs-empty" style="padding:0 20px 10px;"></div>
+    <div id="scan-list"></div>
+  </div>
+
+  <div id="history-panel">
+    <div class="history-header">
+      <div>
+        <p class="sheet-eyebrow" style="margin-bottom:2px;">Observations de terrain</p>
+        <p class="sheet-title" style="margin:0;">Historique</p>
+      </div>
+      <button id="history-close" class="icon-btn" aria-label="Fermer">✕</button>
+    </div>
+    <div class="history-toolbar">
+      <button id="history-export" class="text-btn">⭳ Exporter (.json)</button>
+      <label class="text-btn" for="history-import-file">⭱ Importer</label>
+      <input type="file" id="history-import-file" accept="application/json" hidden>
+      <button id="history-clear" class="text-btn danger">Tout effacer</button>
+    </div>
+    <div id="history-summary"></div>
+    <div id="history-list"></div>
   </div>
 
   <div id="sheet">
@@ -60,10 +92,12 @@
         <p class="sheet-eyebrow">Secteur sélectionné</p>
         <p class="sheet-title" id="sheet-title">Analyse en cours…</p>
         <p class="sheet-coords" id="sheet-coords"></p>
+        <div id="sheet-nav-links" class="nav-links"></div>
       </div>
 
       <div id="species-row"></div>
       <div id="detail"></div>
+      <div id="obs-section"></div>
 
       <div id="inputs-toggle">
         <span>Affiner habitat &amp; sol</span>
