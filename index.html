@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>Radar Champignon</title>
+<meta name="description" content="Score de compatibilité écologique pour la cueillette de champignons, secteur par secteur.">
+<meta name="theme-color" content="#1b1712">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Radar Champi">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <div id="topbar">
+    <div class="brand">
+      <div class="brand-mark">🍄</div>
+      <div class="brand-text">
+        <h1>Radar Champignon</h1>
+        <span>V32 · secteur par secteur</span>
+      </div>
+    </div>
+    <button id="help-btn" class="icon-btn" aria-label="À propos du score" title="À propos du score">?</button>
+  </div>
+
+  <div id="map"></div>
+
+  <button id="locate-btn" class="icon-btn" aria-label="Me géolocaliser" title="Me géolocaliser">◎</button>
+
+  <div id="toast" role="status"></div>
+
+  <div id="install-hint">
+    <p>Installe l'app : bouton Partager <b>›</b> « Sur l'écran d'accueil ».</p>
+    <button id="install-dismiss" class="dismiss">Fermer</button>
+  </div>
+
+  <div id="sheet">
+    <div class="handle-zone" id="sheet-handle"><div class="handle"></div></div>
+
+    <div id="sheet-empty-state" class="sheet-empty">
+      <div class="sheet-header" style="padding-left:0;padding-right:0;">
+        <p class="sheet-eyebrow">Étape 1</p>
+        <p class="sheet-title" style="margin-bottom:6px;">Touche un point sur la carte</p>
+      </div>
+      Choisis un secteur en forêt. Le moteur croise <b>habitat</b>, <b>sol</b>, <b>saison</b> et <b>météo récente</b> (via Open-Meteo, calée automatiquement sur ce point) pour estimer la compatibilité écologique de chaque espèce.
+    </div>
+
+    <div id="sheet-content" style="display:none;">
+      <div class="sheet-header">
+        <p class="sheet-eyebrow">Secteur sélectionné</p>
+        <p class="sheet-title" id="sheet-title">Analyse en cours…</p>
+        <p class="sheet-coords" id="sheet-coords"></p>
+      </div>
+
+      <div id="species-row"></div>
+      <div id="detail"></div>
+
+      <div id="inputs-toggle">
+        <span>Affiner habitat &amp; sol</span>
+        <span id="inputs-caret">▾</span>
+      </div>
+      <div id="inputs-panel">
+        <div class="field-group">
+          <span class="field-label">Essences dominantes</span>
+          <div class="chip-select" id="host-chips">
+            <button data-v="chene">Chêne</button>
+            <button data-v="hetre">Hêtre</button>
+            <button data-v="chataignier">Châtaignier</button>
+            <button data-v="sapin">Sapin</button>
+            <button data-v="epicea">Épicéa</button>
+            <button data-v="pin">Pin</button>
+            <button data-v="bouleau">Bouleau</button>
+            <button data-v="frene">Frêne</button>
+            <button data-v="peuplier">Peuplier</button>
+          </div>
+        </div>
+        <div class="field-group">
+          <span class="field-label">Formation</span>
+          <div class="chip-select" id="formation-chips">
+            <button data-v="feuillus">Feuillus</button>
+            <button data-v="coniferes">Conifères</button>
+            <button data-v="mixte">Mixte</button>
+          </div>
+        </div>
+        <div class="field-group">
+          <span class="field-label">pH du sol <span class="range-value" id="ph-value">non renseigné</span></span>
+          <input type="range" id="ph-range" min="30" max="90" value="55" data-touched="0">
+        </div>
+        <div class="field-group">
+          <span class="field-label">Humidité du sol <span class="range-value" id="moisture-value">non renseignée</span></span>
+          <input type="range" id="moisture-range" min="0" max="60" value="25" data-touched="0">
+        </div>
+        <div class="field-group">
+          <span class="field-label">Drainage</span>
+          <select id="drainage-select">
+            <option value="">Non renseigné</option>
+            <option value="bien drainé">Bien drainé</option>
+            <option value="moyen">Moyen</option>
+            <option value="humide, mal drainé">Humide / mal drainé</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="engine_v32.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
